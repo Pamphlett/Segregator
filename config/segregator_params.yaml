@@ -1,0 +1,77 @@
+# case 0: //car
+# case 1: //bicycle
+# case 2: //motorcycle
+# case 3: //truck
+# case 4: //other-vehicle
+# case 5: //person
+# case 6: //bicyclist
+# case 7: //motorcyclist
+# case 8: //road
+# case 9: //parking
+# case 10: //sidewalk
+# case 11: //other-ground
+# case 12: //building
+# case 13: //fence
+# case 14: //vegetation
+# case 15: //trunk
+# case 16: //terrain
+# case 17: //pole
+# case 18: //traffic-sign
+# default: //moving objects
+
+building_param:
+  use_building: true
+  use_DCVC: true
+  DCVC_min_num: 20
+  class_num: 12
+  min_dist: 0.2
+  min_num: 50
+  max_num: 500
+
+car_param:
+  use_car: true
+  use_DCVC: true
+  DCVC_min_num: 30
+  class_num: 0
+  min_dist: 0.2
+  min_num: 50
+  max_num: 500
+
+vegetation_param:
+  use_veg: false
+  use_DCVC: true
+  DCVC_min_num: 80
+  class_num: 14
+  min_dist: 0.2
+  min_num: 20
+  max_num: 1000
+
+trunk_param:
+  use_trunk: true
+  use_DCVC: true
+  DCVC_min_num: 15
+  class_num: 15
+  min_dist: 0.1
+  min_num: 30
+  max_num: 1000
+
+DCVC_param:
+  startR: 0.35    # Surface voxel initial polar diameter resolution
+  deltaR: 0.0004  # Pole diameter increment
+  deltaP: 1.2     # Pitch angle increment
+  deltaA: 1.2     # Azimuth increment
+  minSeg: 80      # After splitting, how many points are at least one category, and categories smaller than this number will be filtered out
+
+solving_w_cov: true # whether to use cov pruning
+
+noise_level: 0.2
+distribution_noise_level: 5
+
+conduct_other_methods: true # whether to conduct VGICP
+
+src_indx: 0     # source data index
+tgt_indx: 4413   # target data index
+
+inital_yaw_rate: 0
+
+label_deter_rate: 0

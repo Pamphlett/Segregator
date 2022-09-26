@@ -1,0 +1,9 @@
+<launch>
+
+<rosparam command="load" file="$(find segregator)/config/segregator_params.yaml" />
+
+<node name="segregator_example" pkg="segregator" type="segregator_example" output="screen"/>
+
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find segregator)/rviz/segregator.rviz"/>
+
+</launch>
