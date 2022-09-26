@@ -18,7 +18,7 @@ Then create a catkin workspace and clone the repo:
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/src
 git clone git@github.com:Pamphlett/Segreagator.git
-cd Segregeator && mkdir build && cd build
+cd Segreagator && mkdir build && cd build
 cmake ..
 mv pmc-src/ ../../../build/
 cd ~/catkin_ws
