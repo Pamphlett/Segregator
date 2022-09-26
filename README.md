@@ -4,11 +4,11 @@ We present Segregator, a global point cloud registration pipeline using both sem
 
 ![](assets/segregator_intro.png)
 
-###Test Environment
+### Test Environment
 * Linux 18.04 LTS
 * ROS Melodic
 
-###How to Build
+### How to Build
 Run the following lines for denpandencies:
 ```
 sudo apt install cmake libeigen3-dev libboost-all-dev
