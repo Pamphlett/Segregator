@@ -466,24 +466,13 @@ void teaser::ScaleInliersSelector::distributionInlierSelection(const Eigen::Matr
     // element-wise AND using component-wise product (Eigen 3.2 compatible)
     Eigen::Matrix<bool, 1, Eigen::Dynamic> norm_inliers = inliers_forward.cwiseProduct(inliers_reverse);
 
-    // Eigen::Matrix<bool, 1, Eigen::Dynamic> v1_dist_lb    = v1_dist.array() >= 1.5 && v1_dist.array() <= 40;
-    // Eigen::Matrix<bool, 1, Eigen::Dynamic> v2_dist_lb    = v2_dist.array() >= 1.5 && v2_dist.array() <= 40;
-    // Eigen::Matrix<bool, 1, Eigen::Dynamic> dist_inliers  = v1_dist_lb.cwiseProduct(v2_dist_lb);
-
-    // Eigen::Matrix<bool, 1, Eigen::Dynamic> norm_inliers  = sacle_inliers.cwiseProduct(dist_inliers);
-
-    // KL divergence
-    Eigen::MatrixXd kl_divergence = Eigen::MatrixXd::Constant(1, N, 0);
 
     double temp_wasserstein = 0;
 
     #pragma omp parallel for default(none) shared(N, norm_inliers, src_covs, tgt_covs, temp_wasserstein, noise_distribution)
     for (int i = 0; i < N; ++i) {
         if (norm_inliers(i)) {
-            // double temp_kl = (src_covs[i].inverse() * tgt_covs[i]).trace() 
-            //               + (tgt_covs[i].inverse() * src_covs[i]).trace() - 6;
             temp_wasserstein = (src_covs[i] + tgt_covs[i] - 2 * (src_covs[i].sqrt() * tgt_covs[i] * src_covs[i].sqrt()).sqrt()).trace();
-            // std::cout << temp_wasserstein << std::endl;
             if (temp_wasserstein > noise_distribution) {
                 norm_inliers(i) = false;
             }
@@ -491,7 +480,7 @@ void teaser::ScaleInliersSelector::distributionInlierSelection(const Eigen::Matr
         
     }
 
-    *inliers = norm_inliers;//.cwiseProduct(kl_inliers);
+    *inliers = norm_inliers;
 
     
     int inlier_count = 0;

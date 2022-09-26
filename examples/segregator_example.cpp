@@ -12,24 +12,13 @@
 #include <pcl/segmentation/extract_clusters.h>
 #include <pcl/registration/gicp.h>
 #include <pcl/filters/voxel_grid.h>
-
 #include <eigen_conversions/eigen_msg.h>
-
 #include <visualization_msgs/Marker.h>
 
-// #include "dlo/dlo.h"
-
-// Our modules
-// #include "fpfh_manager.hpp"
 #include "filtering.hpp"
-// #include "imageProjection.hpp"
-// #include "patchwork.hpp"
 #include "cluster_manager.hpp"
 #include "semantic_teaser.hpp"
-// #include "conversion.hpp"
-// #include "utility.h"
 #include "dataio.hpp"
-// #include "eval.hpp"
 
 pcl::PointCloud<PointType>::ConstPtr getCloud(std::string filename);
 void setParams (int semantic_class, double cluster_distance_threshold, int minNum, int maxNum, clusterManager::ClusterParams& params, clusterManager::DCVCParam &seg_param);
@@ -44,7 +33,7 @@ const int nameWidth     = 22;
 const int numWidth      = 8;
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "semantic_clustering");
+    ros::init(argc, argv, "segregator");
     ros::NodeHandle nh;
 
     // building cluster params
@@ -126,38 +115,9 @@ int main(int argc, char **argv) {
     double distribution_noise_level;
     nh.param<double>("/distribution_noise_level", distribution_noise_level, 0.06);
 
-    // std::string gt_file_path;
-    // nh.param<std::string>("/gt_file_path", gt_file_path, "");
-    // std::string calib_file_path;
-    // nh.param<std::string>("/calib_file_path", calib_file_path, "");
-
-
-    // Eigen::Matrix4d calib_mat;
-    // if (!load_calib_mat(calib_file_path, calib_mat)) {
-    //     ROS_ERROR("Could not read calib_mat!");
-    //     return 0;
-    // }
-
-    // std::vector<Eigen::Matrix4d, Eigen::aligned_allocator<Eigen::Matrix4d>> GT_list_camera;
-    // GT_list_camera = load_poses_from_transform_matrix(gt_file_path);
-
-    // scan and label locations
-    // std::string src_scan_location, tgt_scan_location, src_label_loacation, tgt_label_loacation;
-    // nh.param<std::string>("/src_scan_location", src_scan_location, "");
-    // nh.param<std::string>("/tgt_scan_location", tgt_scan_location, "");
-    // nh.param<std::string>("/src_label_loacation", src_label_loacation, "");
-    // nh.param<std::string>("/tgt_label_loacation", tgt_label_loacation, "");
-
     int src_indx, tgt_indx;
     nh.param<int>("/src_indx",  src_indx, 0);
     nh.param<int>("/tgt_indx",  tgt_indx, 0);
-
-    // std::ostringstream ss;
-    // ss << std::setw(6) << std::setfill('0') << src_indx;
-    // std::string src_file_name(ss.str());
-    // ss.str(""); // clear ss
-    // ss << std::setw(6) << std::setfill('0') << tgt_indx;
-    // std::string tgt_file_name(ss.str());
 
     bool solving_w_cov;
     nh.param<bool>("/solving_w_cov", solving_w_cov, true);
@@ -202,9 +162,6 @@ int main(int argc, char **argv) {
     pcl::PointCloud<PointType>::Ptr srcRaw(new pcl::PointCloud<PointType>);
     pcl::PointCloud<PointType>::Ptr tgtRaw(new pcl::PointCloud<PointType>);
     pcl::PointCloud<PointType>::Ptr srcInt(new pcl::PointCloud<PointType>);
-
-    // string src_path            = src_scan_location + src_file_name + ".bin";
-    // string tgt_path            = tgt_scan_location + tgt_file_name + ".bin";
    
     *srcInt                    = *getCloud(src_path);
     *tgtRaw                    = *getCloud(tgt_path);
@@ -232,12 +189,9 @@ int main(int argc, char **argv) {
 
     // concatenate labels with point clouds
     pcl::PointCloud<PointL>::Ptr srcSemanticPc(new pcl::PointCloud<PointL>);
-    // pcl::PointCloud<PointL>::Ptr srcSemanticPc_ori(new pcl::PointCloud<PointL>);
     pcl::PointCloud<PointL>::Ptr tgtSemanticPc(new pcl::PointCloud<PointL>);
     merge_label(src_label_path, srcRaw, srcSemanticPc, -1);
     merge_label(tgt_label_path, tgtRaw, tgtSemanticPc, label_deter_rate);
-
-    // srcSemanticPc = random_downsample_pl(srcSemanticPc_ori, 2);
 
     clusterManager::DCVCParam building_DCVC_param;
     building_DCVC_param.startR = startR;
@@ -435,8 +389,6 @@ int main(int argc, char **argv) {
                                                 src_covariances, tgt_covariances, 
                                                 *src_matched_bg, *tgt_matched_bg,
                                                 src_bg_covariances, src_bg_covariances);
-        // semSolver.solve_for_multiclass_with_cov(src_sem_vec, tgt_sem_vec, 
-        //                                         src_covariances, tgt_covariances);
     }
     else {
         semSolver.solve_for_multiclass(src_sem_vec, tgt_sem_vec);
@@ -451,71 +403,6 @@ int main(int argc, char **argv) {
     std::chrono::duration<double> optim_sec = std::chrono::system_clock::now() - before_optim;
     std::cout << setprecision(4) << "\033[1;32mTotal takes: " << sec.count() << " sec. ";
     std::cout << "(Semantic Clustering: " << sec.count() - optim_sec.count() << " sec. + Semantic Teaser: " << optim_sec.count() << " sec.)\033[0m" << std::endl;
-
-    // GICP
-    // pcl::PointCloud<PointType>::Ptr gicp_aligned(new pcl::PointCloud<PointType>);
-    // Eigen::Matrix4d solution_gicp;
-
-    // std::chrono::system_clock::time_point gicp_begin = std::chrono::system_clock::now();
-
-    // if (conduct_other_methods) {
-    //     pcl::PointCloud<PointType>::Ptr src_filtered(new pcl::PointCloud<PointType>);
-    //     pcl::PointCloud<PointType>::Ptr tgt_filtered(new pcl::PointCloud<PointType>);
-
-    //     static pcl::VoxelGrid<PointType> scan_filter;
-    //     scan_filter.setLeafSize(0.25, 0.25, 0.25);
-
-    //     scan_filter.setInputCloud(srcRaw);
-    //     scan_filter.filter(*src_filtered);
-
-    //     scan_filter.setInputCloud(tgtRaw);
-    //     scan_filter.filter(*tgt_filtered);
-
-    //     // pcl::GeneralizedIterativeClosestPoint<PointType, PointType> gicp_solver;
-    //     nano_gicp::NanoGICP<PointType, PointType> gicp_solver;
-    
-    //     gicp_solver.setInputSource(src_filtered);
-    //     gicp_solver.setInputTarget(tgt_filtered);
-    //     gicp_solver.setCorrespondenceRandomness(10);
-    //     gicp_solver.setMaximumIterations(15);
-        
-    //     std::chrono::duration<double> pre_time = std::chrono::system_clock::now() - gicp_begin;
-
-    //     gicp_solver.setNumThreads(4);
-    //     gicp_solver.align(*gicp_aligned);
-
-    //     solution_gicp = gicp_solver.getFinalTransformation().cast<double>();
-
-    // }
-    // std::chrono::duration<double> gicp_time = std::chrono::system_clock::now() - gicp_begin;
-    // std::cout << setprecision(4) << "\033[1;32mVoxelGICP takes: " << gicp_time.count() << " sec. \033[0m" << std::endl;
-
-    //////////////////////////////////////////
-    // evaluation
-    // Eigen::Matrix4d gt_body = GT_list_camera[tgt_indx].inverse() * GT_list_camera[src_indx];
-    // std::cout << gt_body << std::endl;
-
-    // Eigen::Matrix4d gt_lidar = calib_mat.inverse() * gt_body * calib_mat * vis_mat.inverse();
-    //////////////////////////////////////////
-
-    // vgicp
-    // Eigen::Matrix4d lo_body_vgicp = solution_gicp;
-
-    // Segregator result
-    // Eigen::Matrix4d lo_body = solution;
-
-    // Eval eval;
-    // double translation_error;
-    // double rotation_error;
-    // eval.compute_adj_rpe(gt_lidar, solution, translation_error, rotation_error);
-
-    // double translation_error_vgicp;
-    // double rotation_error_vgicp;
-    // eval.compute_adj_rpe(gt_lidar, lo_body_vgicp, translation_error_vgicp, rotation_error_vgicp);
-
-    // std::cout << setprecision(4) << "\033[1;32m";
-    // std::cout << "Segregator Translation Error = " << translation_error << " meter." << std::endl;
-    // std::cout << "           Rotational  Error = " << rotation_error << " deg.\033[0m" << std::endl;
 
     // for visualization
     pcl::PointCloud<PointRGB>::Ptr srcColoredRaw(new pcl::PointCloud<PointRGB>);
@@ -539,9 +426,6 @@ int main(int argc, char **argv) {
     sensor_msgs::PointCloud2 TgtTrunkMsg      = cloud2msg(*tgtTrunkCloud);
 
     sensor_msgs::PointCloud2 TransformedMsg   = cloud2msg(*transformed_cloud);
-
-    // other methodes
-    // sensor_msgs::PointCloud2 GicpAlignedMsg   = cloud2msg(*gicp_aligned);
 
     // correspondence visualization
     pcl::PointCloud<PointType> srcMaxClique;
@@ -623,8 +507,6 @@ pcl::PointCloud<PointType>::ConstPtr getCloud(std::string filename) {
         pt.x = buffer[i * 4];
         pt.y = buffer[i * 4 + 1];
         pt.z = buffer[i * 4 + 2];
-        // Intensity is not in use
-//         pt.intensity = buffer[i * 4 + 3];
     }
 
     return cloud;

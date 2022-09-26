@@ -80,21 +80,6 @@ execute_process(COMMAND "${CMAKE_COMMAND}" --build .
 add_subdirectory("${CMAKE_BINARY_DIR}/pmc-src"   #CMAKE_BINARY_DIR =>
         "${CMAKE_BINARY_DIR}/pmc-build")
 
-# # NanoFLANN
-# add_library(nanoflann SHARED
-# src/nano_gicp/nanoflann.cc
-# )
-# target_link_libraries(nanoflann ${PCL_LIBRARIES})
-# target_include_directories(nanoflann PUBLIC include ${PCL_INCLUDE_DIRS})
-
-# # NanoGICP
-# add_library(nano_gicp SHARED
-#   src/nano_gicp/lsq_registration.cc
-#   src/nano_gicp/nano_gicp.cc
-# )
-# target_link_libraries(nano_gicp ${PCL_LIBRARIES} ${OpenMP_LIBS} nanoflann)
-# target_include_directories(nano_gicp PUBLIC include ${PCL_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR})
-
 ####### Executable ####### 
 set(teaser_src
         src/registration.cc
@@ -113,6 +98,5 @@ target_link_libraries(segregator_example
         ${OpenMP_LIBS}
         stdc++fs
         pmc
-        # nano_gicp
         )
 

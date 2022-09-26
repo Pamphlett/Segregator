@@ -8,8 +8,6 @@ void semanticTeaser::solve (const Eigen::MatrixX3d &src,
     this->matched_src_ = this->initial_correspondences.points.first;
     this->matched_tgt_ = this->initial_correspondences.points.second;
 
-    // this->initial_correspondences = *correspondences;
-
     this->solver.solve(this->initial_correspondences.points.first, 
                        this->initial_correspondences.points.second);
 
@@ -44,7 +42,6 @@ void semanticTeaser::solve_for_multiclass (const std::vector<pcl::PointCloud<pcl
         Eigen::MatrixX3d tgt_mat;
         pcl2eigen(src_cloud_vec[indx], src_mat);
         pcl2eigen(tgt_cloud_vec[indx], tgt_mat);
-        // auto sub_correspondences = culculate_correspondence(src_mat, tgt_mat);
 
         int index = 0;
         // build all to all correspondence
@@ -174,7 +171,6 @@ void semanticTeaser::solve_for_multiclass_with_cov(const std::vector<pcl::PointC
         Eigen::MatrixX3d tgt_mat;
         pcl2eigen(src_cloud_vec[class_indx], src_mat);
         pcl2eigen(tgt_cloud_vec[class_indx], tgt_mat);
-        // auto sub_correspondences = culculate_correspondence(src_mat, tgt_mat);
 
         // build all to all correspondence
         for (int src_index = 0; src_index < src_mat.rows(); src_index++) {
@@ -231,11 +227,6 @@ void semanticTeaser::culculate_correspondence(const Eigen::MatrixX3d& src,
                                               const Eigen::MatrixX3d& tgt) {
     // assert()
     int temp_size                 = src.rows() * tgt.rows();
-    // auto correspondences     = std::make_shared<semanticTeaser::Correspondences>();
-    // correspondences->points  = std::make_pair(Eigen::Matrix3Xd::Zero(3, size), 
-    //                                             Eigen::Matrix3Xd::Zero(3, size));
-    // correspondences->indices.first.reserve(size);
-    // correspondences->indices.second.reserve(size);
 
     this->initial_correspondences.points.first.conservativeResize(Eigen::NoChange, temp_size);
     this->initial_correspondences.points.second.conservativeResize(Eigen::NoChange, temp_size);

@@ -8,7 +8,7 @@
  * DCVC Code based on: T-LOAM: Truncated Least Squares LiDAR-Only Odometry and Mapping in Real Time
  * link: https://github.com/zpw6106/tloam
  * 
- * fpfh feature extraction code based on: Teaser++ and Quatro
+ * fpfh feature extraction/G-TRIM code based on: Teaser++ and Quatro
  * link: https://github.com/MIT-SPARK/TEASER-plusplus
  * link: https://github.com/url-kaist/Quatro
  * 
@@ -17,68 +17,17 @@
 #ifndef CLUSTER_MANAGER_H
 #define CLUSTER_MANAGER_H
 
-#include "teaser_utils/fpfh.h"
-#include "teaser_utils/feature_matcher.h"
-#include "utility.h"
+#include <unordered_map>
 
 #include <pcl/segmentation/extract_clusters.h>
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/kdtree/kdtree_flann.h>
 
-#include <unordered_map>
+#include "teaser_utils/fpfh.h"
+#include "teaser_utils/feature_matcher.h"
+#include "utility.h"
 
 #include "conversion.hpp"
-
-// template<typename T>
-// void voxelize(
-//         const boost::shared_ptr<pcl::PointCloud<T> > srcPtr, boost::shared_ptr<pcl::PointCloud<T> > dstPtr,
-//         double voxelSize) {
-//     static pcl::VoxelGrid<T> voxel_filter;
-//     voxel_filter.setInputCloud(srcPtr);
-//     voxel_filter.setLeafSize(voxelSize, voxelSize, voxelSize);
-//     voxel_filter.filter(*dstPtr);
-// }
-
-// template<typename T>
-// void voxelize(
-//         pcl::PointCloud<T> &src, boost::shared_ptr<pcl::PointCloud<T> > dstPtr,
-//         double voxelSize) {
-//     static pcl::VoxelGrid<T> voxel_filter;
-//     voxel_filter.setInputCloud(src);
-//     voxel_filter.setLeafSize(voxelSize, voxelSize, voxelSize);
-//     voxel_filter.filter(*dstPtr);
-// }
-
-// template<typename T>
-// inline void pcl2teaser(const pcl::PointCloud<T> &pcl_raw, teaser::PointCloud &cloud) {
-//     cloud.clear();
-//     for (const auto &pt: pcl_raw.points) {
-//         cloud.push_back({pt.x, pt.y, pt.z});
-//     }
-// }
-
-// template<typename T>
-// inline void eigen2pcl(const Eigen::Matrix<double, 3, Eigen::Dynamic> &src, pcl::PointCloud<T> &cloud) {
-//     int num_pc = src.cols();
-//     T   pt_tmp;
-//     if (!cloud.empty()) cloud.clear();
-//     for (int i = 0; i < num_pc; ++i) {
-//         pt_tmp.x = src(0, i);
-//         pt_tmp.y = src(1, i);
-//         pt_tmp.z = src(2, i);
-//         cloud.points.emplace_back(pt_tmp);
-//     }
-// }
-
-// template<typename T>
-// inline void pcl2eigen(const pcl::PointCloud<T> &pcl_raw, Eigen::Matrix<double, 3, Eigen::Dynamic> &cloud) {
-//     int N = pcl_raw.points.size();
-//     cloud.resize(3, N);
-//     for (int i = 0; i < N; ++i) {
-//         cloud.col(i) << pcl_raw.points[i].x, pcl_raw.points[i].y, pcl_raw.points[i].z;
-//     }
-// }
-
 
 class clusterManager
 {
@@ -185,12 +134,10 @@ public:
             ROS_ERROR("Select semantic points failed!");
             return;
         }
-        // selected_points_ is now the point cloud to be processed
 
         const int region_max_ = 14;
         int regions_[100];
 
-        // regions_[0] = 14; regions_[1] = 14; regions_[2] = 14; regions_[3] = 15; regions_[4] = 14;
         regions_[0] = 4; regions_[1] = 5; regions_[2] = 4; regions_[3] = 5; regions_[4] = 4;
         regions_[5] = 5; regions_[6] = 5; regions_[7] = 4; regions_[8] = 5; regions_[9] = 4;
         regions_[10]= 5; regions_[11]= 5; regions_[12]= 4; regions_[13]= 20;
@@ -204,9 +151,6 @@ public:
                 float d2 = selected_points_->points[i].x * selected_points_->points[i].x +
                            selected_points_->points[i].y * selected_points_->points[i].y +
                            selected_points_->points[i].z * selected_points_->points[i].z;
-                // float d2 = pcl_pc_in->points[(*pc_indices)[i]].x * pcl_pc_in->points[(*pc_indices)[i]].x +
-                // pcl_pc_in->points[(*pc_indices)[i]].y * pcl_pc_in->points[(*pc_indices)[i]].y +
-                // pcl_pc_in->points[(*pc_indices)[i]].z * pcl_pc_in->points[(*pc_indices)[i]].z;
                 if(d2 > range * range && d2 <= (range + regions_[j]) * (range + regions_[j])) {
                     indices_array[j].push_back(i);
                     break;
@@ -280,11 +224,7 @@ public:
                         Eigen::Vector4f k_min, k_max;
                         pcl::getMinMax3D(*clusters_[k], k_min, k_max);
                         if(std::max(std::min((double)j_max[0], (double)k_max[0]) - std::max((double)j_min[0], (double)k_min[0]), 0.0) 
-                           * std::max(std::min((double)j_max[1], (double)k_max[1]) - std::max((double)j_min[1], (double)k_min[1]), 0.0) > z_merging_threshold_ 
-                        //    || std::pow(std::min((double)j_max[0], (double)k_max[0]) - std::max((double)j_min[0], (double)k_min[0]), 2) 
-                        //    + std::pow(std::min((double)j_max[1], (double)k_max[1]) - std::max((double)j_min[1], (double)k_min[1]), 2)
-                        //    + std::pow(std::min((double)j_max[2], (double)k_max[2]) - std::max((double)j_min[2], (double)k_min[2]), 2) < 5
-                           ) {
+                           * std::max(std::min((double)j_max[1], (double)k_max[1]) - std::max((double)j_min[1], (double)k_min[1]), 0.0) > z_merging_threshold_) {
                             *clusters_[j] += *clusters_[k];
                             clusters_.erase(clusters_.begin() + k);
                             //std::cerr << "z-merging: clusters_ " << k << " is merged into " << j << std::endl; 
@@ -306,13 +246,9 @@ public:
 
         for (int i = 0; i < cluster_size; ++i) {
 
-            // pcl::PointCloud<PointType>::Ptr cur_cluster_cloud = clusters_[i];
-
-            // std::vector<int> index_vec = cluster_indices_[i].indices;
             Eigen::Matrix<double, 3, -1> neighbors(3, clusters_[i]->size());
 
             for (int j = 0; j < clusters_[i]->points.size(); j++) {
-                // neighbors.col(j) = selected_points_->at(index_vec[j]).getVector3fMap().cast<double>();
                 neighbors.col(j) = clusters_[i]->at(j).getVector3fMap().cast<double>();
             }
 
@@ -345,8 +281,6 @@ public:
 
         // compute centroid coordinate
         Eigen::Matrix<double, 3, 1> center = neighbors.rowwise().mean();
-        // PointType p_temp((float)center(0), (float)center(1), (float)center(2));
-        // cluster_centroid->push_back(p_temp);
         // substract mean
         neighbors.colwise() -= center;
         // compute cov 3*3
@@ -606,12 +540,6 @@ public:
         for (size_t i = 0; i < totalSize; ++i) {
             // zero initialization for unordered_map
             label2segIndex[label_info[i]].emplace_back(i);
-            // if (label2segIndex.find(label_info[i]) == label2segIndex.end()) {
-            //     label2segIndex[label_info[i]].emplace_back(i);
-            // }
-            // else {
-            //     label2segIndex[label_info[i]] += 1;
-            // }
         }
 
         for (auto& it: label2segIndex) {
@@ -701,7 +629,6 @@ public:
         src_tree.setInputCloud(srcFeat);
         tgt_tree.setInputCloud(tgtFeat);
 
-        // #pragma omp parallel for default(none) shared(corr_)
         for (size_t i = 0; i < corr_.size(); ++i) {
             PointType temp_src, temp_tgt;
             temp_src = src_matched_pcl_.points[i];

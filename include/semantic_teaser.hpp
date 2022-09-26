@@ -2,14 +2,11 @@
 #define SEMANTIC_TEASER_H
 
 #include "teaser/registration.h"
-// #include <teaser/registration.h>
 
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 
 #include "conversion.hpp"
-// #include <nanoflann.hpp>
-// #include "utility.h"
 
 // abstract solver class
 class AbstrctSolver {

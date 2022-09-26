@@ -62,16 +62,17 @@ DCVC_param:
   deltaA: 1.2     # Azimuth increment
   minSeg: 80      # After splitting, how many points are at least one category, and categories smaller than this number will be filtered out
 
-solving_w_cov: true # whether to use cov pruning
+# whether to use G-TRIM for pruning
+solving_w_cov: true 
 
+# params for TLS
 noise_level: 0.2
 distribution_noise_level: 5
 
-conduct_other_methods: true # whether to conduct VGICP
+# index for source and target clouds
+src_indx: 0 
+tgt_indx: 4413
 
-src_indx: 0     # source data index
-tgt_indx: 4413   # target data index
-
+# perturbations
 inital_yaw_rate: 0
-
 label_deter_rate: 0
