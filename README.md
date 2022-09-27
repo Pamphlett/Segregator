@@ -5,15 +5,15 @@ We present Segregator, a global point cloud registration pipeline using both sem
 ![](assets/segregator_intro.png)
 
 ### Test Environment
-* Linux 18.04 LTS
-* ROS Melodic
+* Linux 18.04/20.04 LTS
+* ROS Melodic/Noetic
 
 ### How to Build
 Run the following lines for denpandencies:
 ```
 sudo apt install cmake libeigen3-dev libboost-all-dev
 ```
-Then create a catkin workspace and clone the repo:
+We use [catkin_tools](https://catkin-tools.readthedocs.io/en/latest/) to build the project:
 ```
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/src
@@ -31,3 +31,6 @@ With the provided scans in the ```materials``` folder, run the following lines i
 source devel/setup.bash
 roslaunch segregator run_segregator.launch
 ```
+
+### Acknowledgements
+We would like to thank [Quatro](https://github.com/url-kaist/Quatro), [Teaser](https://github.com/MIT-SPARK/TEASER-plusplus) as well as [T-LOAM](https://github.com/zpw6106/tloam) for making their project public.
