@@ -1,4 +1,4 @@
-# ***Segreagator***: Global Point Cloud Registration with Semantic and Geometric Cues
+# ***Segregator***: Global Point Cloud Registration with Semantic and Geometric Cues
 
 Pengyu Yin, Shenghai Yuan, [Haozhi Cao](https://www.researchgate.net/profile/Haozhi-Cao), Xingyu Ji, Shuyang Zhang, and [Lihua Xie](https://dr.ntu.edu.sg/cris/rp/rp00784)
 [ICRA2023][preprint coming soon]
