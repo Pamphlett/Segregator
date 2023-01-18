@@ -26,11 +26,14 @@ catkin build segregator
 ```
 
 ### How to Run
-With the provided scans in the ```materials``` folder, run the following lines in the catkin workspace for a toy example:
+With the provided scans in the ```materials``` folder, run the following lines in the catkin workspace to reproduce the figure above:
 ```
 source devel/setup.bash
 roslaunch segregator run_segregator.launch
 ```
+
+### Comparative Results
+TO BE ADDED
 
 ### Acknowledgements
 We would like to thank [Quatro](https://github.com/url-kaist/Quatro), [Teaser](https://github.com/MIT-SPARK/TEASER-plusplus) as well as [T-LOAM](https://github.com/zpw6106/tloam) for making their project public.
