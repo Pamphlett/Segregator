@@ -53,6 +53,12 @@ TO BE ADDED
 ### Citation
 If you find Segregator useful in your academic project, please cite our paper:
 ```
+@article{yin2023segregator,
+  title={Segregator: Global Point Cloud Registration with Semantic and Geometric Cues},
+  author={Yin, Pengyu and Yuan, Shenghai and Cao, Haozhi and Ji, Xingyu and Zhang, Shuyang and Xie, Lihua},
+  journal={arXiv preprint arXiv:2301.07425},
+  year={2023}
+}
 ```
 
 ### Contact
