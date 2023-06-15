@@ -46,7 +46,7 @@ roslaunch segregator run_segregator.launch
 Generally, apart from the pointcloud file itself, per-point semantic label is also needed to make Segregator work. We recommend using [SPVNAS](https://github.com/mit-han-lab/spvnas/blob/master/README.md#news) (the most accurate), [Rangenet](https://github.com/PRBonn/rangenet_lib) or [SalsaNext](https://github.com/TiagoCortinhal/SalsaNext) (far more computationally efficient, range image-based methods with a bit segmentation quality drop) to generate these labels.
 
 ----
-
+### Illustration of registration results
 
 ### Citation
 If you find Segregator useful in your academic project, please cite our paper:
