@@ -49,10 +49,11 @@ Generally, apart from the pointcloud file itself, per-point semantic label is al
 ### Illustration of registration results
 ![](https://cdn.staticaly.com/gh/Pamphlett/picx-images-hosting@master/20230615/kitti_initial_val.3stryu9etd00.webp)
 
-![](https://cdn.staticaly.com/gh/Pamphlett/picx-images-hosting@master/20230615/kitti_initial_val.3stryu9etd00.webp)
+![](https://cdn.staticaly.com/gh/Pamphlett/picx-images-hosting@master/20230615/kitti_quatro_res.3hzyhfcabo60.webp)
 
-![](https://cdn.staticaly.com/gh/Pamphlett/picx-images-hosting@master/20230615/kitti_initial_val.3stryu9etd00.webp)
+![](https://cdn.staticaly.com/gh/Pamphlett/picx-images-hosting@master/20230615/kitti_segregator_res.790j9cob7z80.webp)
 
+Different rows corresponds to initial values, results from sota Quatro and Segregator.
 
 ### Citation
 If you find Segregator useful in your academic project, please cite our paper:
