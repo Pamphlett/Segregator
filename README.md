@@ -47,7 +47,7 @@ Generally, apart from the pointcloud file itself, per-point semantic label is al
 
 ----
 ### Illustration of registration results
-[](https://cdn.staticaly.com/gh/Pamphlett/picx-images-hosting@master/20230615/kitti_initial_val.3stryu9etd00.webp)
+![](https://cdn.staticaly.com/gh/Pamphlett/picx-images-hosting@master/20230615/kitti_initial_val.3stryu9etd00.webp)
 
 
 ### Citation
