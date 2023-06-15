@@ -86,9 +86,10 @@ set(teaser_src
         src/graph.cc
         src/teaser_utils/feature_matcher.cc
         src/teaser_utils/fpfh.cc
+        src/semantic_teaser.cpp
         )
 
-add_executable(segregator_example examples/segregator_example.cpp ${teaser_src} src/semantic_teaser.cpp)
+add_executable(segregator_example examples/segregator_example.cpp ${teaser_src})
 add_dependencies(segregator_example ${catkin_EXPORTED_TARGETS})
 target_compile_options(segregator_example PRIVATE ${OpenMP_FLAGS})
 target_link_libraries(segregator_example
