@@ -2,7 +2,7 @@
 
 **Pengyu Yin**, **Shenghai Yuan**, **[Haozhi Cao](https://www.researchgate.net/profile/Haozhi-Cao)**, **Xingyu Ji**, **Shuyang Zhang**, and **[Lihua Xie](https://dr.ntu.edu.sg/cris/rp/rp00784)**
 
-[preprint on Arxiv](https://arxiv.org/abs/2301.07425)
+Paper links: [Arxiv](https://arxiv.org/abs/2301.07425) | [IEEE](https://ieeexplore.ieee.org/document/10160798)
 
 ![](assets/segregator_intro.png)
 
@@ -36,14 +36,14 @@ catkin build segregator
 ----
 
 ### Test on different datasets
-* #### Toy example on KITTI
+* #### A toy example on KITTI
 We include two distant scans (frame 0 and 4413), as well as their corresponding semantic masks, from [KITTI](https://www.cvlibs.net/datasets/kitti/) dataset sequence 00. Please run the following lines in the catkin workspace to reproduce the figure above:
 ```
 source devel/setup.bash
 roslaunch segregator run_segregator.launch
 ```
 * #### On other/self-collected dataset
-Generally, apart from the pointcloud file itself, per-point semantic label is also needed to make Segregator work. We recommend using [SPVNAS](https://github.com/mit-han-lab/spvnas/blob/master/README.md#news) (the most accurate), [Rangenet](https://github.com/PRBonn/rangenet_lib) or [SalsaNext](https://github.com/TiagoCortinhal/SalsaNext) (far more computationally efficient, range image-based methods with a bit segmentation quality drop) to generate these labels.
+Generally, apart from the pointcloud file itself, per-point semantic label is also needed to make Segregator work. We recommend using [SPVNAS](https://github.com/mit-han-lab/spvnas/blob/master/README.md#news) (the most accurate), [Rangenet](https://github.com/PRBonn/rangenet_lib) or [SalsaNext](https://github.com/TiagoCortinhal/SalsaNext) (far more computationally efficient, range image-based methods with noticable segmentation performance drop) to generate these labels.
 
 ----
 ### Illustration of registration results
@@ -58,12 +58,15 @@ Different rows corresponds to initial values, results from sota Quatro and Segre
 ### Citation
 If you find Segregator useful in your academic project, please cite our paper:
 ```
-@article{yin2023segregator,
-  title={Segregator: Global Point Cloud Registration with Semantic and Geometric Cues},
+@INPROCEEDINGS{10160798,
   author={Yin, Pengyu and Yuan, Shenghai and Cao, Haozhi and Ji, Xingyu and Zhang, Shuyang and Xie, Lihua},
-  journal={arXiv preprint arXiv:2301.07425},
-  year={2023}
-}
+  booktitle={2023 IEEE International Conference on Robotics and Automation (ICRA)}, 
+  title={Segregator: Global Point Cloud Registration with Semantic and Geometric Cues}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={2848-2854},
+  doi={10.1109/ICRA48891.2023.10160798}}
 ```
 
 ### Contact
