@@ -1,0 +1,1 @@
+/usr/bin/c++    -fopenmp -O3 -DNDEBUG     CMakeFiles/pmc_main.dir/pmc_driver.cpp.o  -o ../devel/lib/segregator/pmc_main  -Wl,-rpath,/home/pam/catkin_ws/src/Segreagator/build/devel/lib ../devel/lib/libpmc.so /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.so 

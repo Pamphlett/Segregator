@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: segregator
+Description: Description of segregator
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lsegregator -lnano_gicp -lnanoflann
+Requires: roscpp rospy std_msgs

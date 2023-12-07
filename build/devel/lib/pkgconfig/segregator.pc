@@ -1,0 +1,8 @@
+prefix=/home/pam/catkin_ws/src/Segreagator/build/devel
+
+Name: segregator
+Description: Description of segregator
+Version: 0.0.0
+Cflags: -I/home/pam/catkin_ws/src/Segreagator/build/devel/include -I/home/pam/catkin_ws/src/Segreagator/include
+Libs: -L${prefix}/lib -lsegregator -lnano_gicp -lnanoflann
+Requires: roscpp rospy std_msgs

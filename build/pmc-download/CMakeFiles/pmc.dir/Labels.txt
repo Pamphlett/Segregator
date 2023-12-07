@@ -1,0 +1,14 @@
+# Target labels
+ pmc
+# Source files and their labels
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/CMakeFiles/pmc
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/CMakeFiles/pmc.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/CMakeFiles/pmc-complete.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/pmc-prefix/src/pmc-stamp/pmc-install.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/pmc-prefix/src/pmc-stamp/pmc-mkdir.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/pmc-prefix/src/pmc-stamp/pmc-download.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/pmc-prefix/src/pmc-stamp/pmc-update.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/pmc-prefix/src/pmc-stamp/pmc-patch.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/pmc-prefix/src/pmc-stamp/pmc-configure.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/pmc-prefix/src/pmc-stamp/pmc-build.rule
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/pmc-prefix/src/pmc-stamp/pmc-test.rule

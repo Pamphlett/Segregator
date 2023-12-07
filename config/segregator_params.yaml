@@ -38,7 +38,7 @@ car_param:
   max_num: 500
 
 vegetation_param:
-  use_veg: false
+  use_veg: true
   use_DCVC: true
   DCVC_min_num: 80
   class_num: 14
@@ -63,7 +63,7 @@ DCVC_param:
   minSeg: 80      # After splitting, how many points are at least one category, and categories smaller than this number will be filtered out
 
 # whether to use G-TRIM for pruning
-solving_w_cov: true 
+solving_w_cov: false 
 
 # params for TLS
 noise_level: 0.2
@@ -76,3 +76,6 @@ tgt_indx: 4413
 # perturbations
 inital_yaw_rate: 0
 label_deter_rate: 0
+
+# certification
+USE_CERT: true

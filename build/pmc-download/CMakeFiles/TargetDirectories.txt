@@ -1,0 +1,3 @@
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/CMakeFiles/rebuild_cache.dir
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/CMakeFiles/edit_cache.dir
+/home/pam/catkin_ws/src/Segreagator/build/pmc-download/CMakeFiles/pmc.dir

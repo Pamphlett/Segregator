@@ -72,7 +72,7 @@ if (OPENMP_FOUND)
 endif ()
 
 
-configure_file(pmc/pmc.CMakeLists.txt.in pmc-download/CMakeLists.txt)
+configure_file(cmake/pmc.CMakeLists.txt.in pmc-download/CMakeLists.txt)
 execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" .
         WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/pmc-download")
 execute_process(COMMAND "${CMAKE_COMMAND}" --build .
@@ -80,9 +80,23 @@ execute_process(COMMAND "${CMAKE_COMMAND}" --build .
 add_subdirectory("${CMAKE_BINARY_DIR}/pmc-src"   #CMAKE_BINARY_DIR =>
         "${CMAKE_BINARY_DIR}/pmc-build")
 
+# spectra
+configure_file(cmake/spectra.CMakeLists.txt.in spectra-download/CMakeLists.txt)
+execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" .
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/spectra-download")
+execute_process(COMMAND "${CMAKE_COMMAND}" --build .
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/spectra-download")
+add_subdirectory("${CMAKE_BINARY_DIR}/spectra-src" # CMAKE_BINARY_DIR =>
+        "${CMAKE_BINARY_DIR}/spectra-build")
+set(SPECTRA_INCLUDE_DIRS "${CMAKE_BINARY_DIR}/spectra-src/include")
+
+include_directories(${SPECTRA_INCLUDE_DIRS})
+# install(DIRECTORY ${SPECTRA_INCLUDE_DIRS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
 ####### Executable ####### 
 set(teaser_src
         src/registration.cc
+        src/certification.cc
         src/graph.cc
         src/teaser_utils/feature_matcher.cc
         src/teaser_utils/fpfh.cc
