@@ -1,3 +1,0 @@
-repository='https://github.com/jingnanshi/pmc.git'
-module=''
-tag='origin'
